@@ -780,6 +780,15 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
             name = name[0] + ELEMENT.name + name[1]
         }
 
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
         P._hidden = $(
             '<input ' +
             'type=hidden ' +
@@ -790,7 +799,7 @@ function PickerConstructor( ELEMENT, NAME, COMPONENT, OPTIONS ) {
             // If the element has a value, set the hidden value as well.
             (
                 $ELEMENT.data('value') || ELEMENT.value ?
-                    ' value="' + P.get('select', SETTINGS.formatSubmit) + '"' :
+                    ' value="' + escapeHtml(P.get('select', SETTINGS.formatSubmit)) + '"' :
                     ''
             ) +
             '>'
